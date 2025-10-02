@@ -1,0 +1,920 @@
+---
+
+## Arquitectura del Sistema
+
+<aside>
+🎫
+
+1) Sistema de Venta de Tickets
+Lanzamiento: Noviembre 2025
+
+</aside>
+
+- Plataforma de inscripciones y venta de entradas
+- Integración con pasarela de pagos OnvoPayments
+- Gestión de diferentes categorías de tickets
+- Landing page informativa
+
+<aside>
+🧾
+
+2) Sistema de Control de Acceso
+Operación: Mayo 2026
+
+</aside>
+
+- Web app para lectura de códigos QR
+- Control de asistencia en tiempo real
+- Generación automática de certificados
+- Dashboard administrativo
+
+---
+
+## Fase 1: Sistema de Venta de Tickets
+
+### Tipos de Entradas y Categorías
+
+- **Tickets Pagados:** Doctores colegiados y profesionales
+- **Tickets Gratuitos:** Invitados especiales
+- **Conferencistas:** Acceso completo sin costo
+- **Patrocinadores:** Entradas corporativas
+
+### Opciones de Compra
+
+- **Por días individuales:** Elegir primer día, segundo día, tercer día o todos
+- **Entrada completa:** Acceso a todo el evento (29–30 mayo)
+- **Producto adicional:** Fiesta de clausura opcional con costo adicional
+
+### Estructura de Precios por Fechas
+
+| Fase | Ventana | Descripción |
+| --- | --- | --- |
+| Early Bird | Noviembre 2025 – Fecha X | Precio más económico para compras tempranas. Incentivo para registros anticipados. |
+| Precio Regular | Fecha X – Fecha Y | Precio estándar del evento. |
+| Precio Estudiante | Siempre que aplique | Tarifa especial para estudiantes con validación. |
+| Precio Last Minute (opcional) | Días antes del evento | Precio especial para incentivar compras de último momento. |
+
+### Flujo de Compra del Usuario
+
+1. **Acceso a la plataforma:** Sin necesidad de registro previo
+2. **Selección de entradas:**
+    - Elige tipo de entrada (por días o completa)
+    - Selecciona cantidad (puede comprar para múltiples personas)
+    - Opcionalmente agrega fiesta de clausura
+    - Posibilidad de usar cupones para reducir el precio
+3. **Formulario de datos** por cada entrada:
+    - Nombre completo
+    - Edad
+    - Género
+    - Procedencia geográfica
+    - Profesión
+    - Sector (público/privado)
+    - Número de teléfono
+    - Correo electrónico
+4. **Pago:** A través de OnvoPayments
+5. **Confirmación:**
+    - Correo con detalles de la compra
+    - QR único por cada entrada
+    - Cada entrada asociada a un nombre específico
+
+### Gestión de Pagos y Seguimiento
+
+### OnvoPayments — Features
+
+- Notificaciones de procesos de compra iniciados pero no finalizados
+- Seguimiento automático de transacciones
+- Soporte para múltiples monedas (USD/CRC)
+- Integración con datáfonos para ventas en sitio
+
+### Sistema de Seguimiento
+
+- Dashboard administrativo para ver ventas en tiempo real
+- Identificación de usuarios que iniciaron compra pero no completaron
+- Herramientas de follow-up para ventas pendientes
+- Reportes de transacciones y estados de pago
+
+---
+
+## Fase 2: Landing Page y Contenido
+
+### Secciones de la Landing Page
+
+1. **Información del evento:** Fechas, ubicación, descripción general
+2. **Agenda:** Programa detallado, horarios de charlas
+3. **Conferencistas:** Perfiles y biografías de speakers
+4. **Registro:** Acceso directo al sistema de compra
+5. **Patrocinadores:** Logos y información de sponsors
+6. **Contacto:** Información de contacto y ubicación
+
+### Características Técnicas de la Landing
+
+- **Diseño responsive:** Compatible con móvil, tablet y desktop
+- **Optimización SEO:** Básica para mejorar visibilidad
+- **Integración nativa:** Con sistema de acreditación
+- **Tracking:** Meta Pixel y Google Analytics para campañas publicitarias
+
+---
+
+## Fase 3: Sistema de Control de Acceso (Mayo 2026)
+
+### Web App para Lectura QR — Funcionamiento
+
+- **PWA (Progressive Web App):** No requiere instalación
+- **Acceso por roles:** Usuarios administrativos con credenciales
+- **Escaneo vía cámara:** Utiliza WebRTC para acceso a cámara del dispositivo
+- **Validación en tiempo real:** Marca entrada y salida por día
+
+### Proceso de Validación
+
+1. **En la entrada:** Escaneo del QR para marcar asistencia
+2. **Control por charlas:** Seguimiento de asistencia (hora entrada, hora salida)
+3. **Salida:** Registro de salida del evento y de ciertas charlas para la acreditación
+
+### Manejo de Usuarios sin QR
+
+### Problema Identificado
+
+- Usuarios de tercera edad o con poca familiaridad tecnológica
+- Personas que pagaron pero no tienen el QR accesible
+
+### Solución
+
+- **Impresión en sitio:** Sistemacon la posibilidad de que los administradores puedan descargar el QRs de los clientes
+- **Stickers con QR:** Impresión de códigos QR en stickers adhesivos
+- **Aplicación en gafetes:** Los stickers se pegan en los gafetes entregados en el evento
+
+### Venta de Entradas en Sitio — Funcionalidad
+
+- **Sistema de venta in situ:** Para personas que llegan sin entrada
+- **Integración con datáfonos:** Pago inmediato con tarjeta
+- **Generación instantánea de QR:** Se crea y entrega al momento
+- **Formulario rápido:** Captura de datos esenciales en el lugar
+
+---
+
+## Fase 4: Sistema de Certificados
+
+### Criterios para Certificación
+
+1. **Compra de entrada:** Confirmación de pago
+2. **Asistencia física:** Validación mediante escaneo de QR
+3. **Cumplimiento de requisitos:** Asistencia a charlas, asistencia por día.
+
+### Proceso Automatizado
+
+- **Filtrado automático:** Sistema identifica usuarios que cumplen requisitos
+- **Generación de certificados:** Automática al finalizar el evento
+- **Envío por correo:** Certificado de aprovechamiento o participación
+- **Timing:** Solo se envían después de concluir todo el evento
+
+---
+
+## Fase 5: Dashboard Administrativo
+
+### Panel de Control Principal — Métricas en Tiempo Real
+
+- Ventas totales por día
+- Registros confirmados vs pendientes
+- Aforo (asistentes de cada evento)
+- Ingresos generados
+
+### Gestión de Usuarios
+
+- **Lista completa de registrados:** Con todos los datos del formulario
+- **Filtros avanzados:** Por edad, género, procedencia, profesión, sector
+- **Estados de pago:** Pagado, pendiente, reembolsado
+- **Seguimiento de asistencia:** Quién ha ingresado al evento
+
+### Reportes Demográficos
+
+- Distribución por edad y género
+- Procedencia geográfica
+- Análisis profesional (público vs privado)
+- Patrones de compra por fechas
+
+### Herramientas de Seguimiento
+
+- **Follow-up de ventas:** Usuarios que iniciaron compra sin completar
+- **Comunicación:** Herramientas para contactar usuarios
+- **Exportación:** Todos los datos exportables a Excel
+- **Analytics:** Integración con Google Analytics para tracking de campañas
+- Meta Pixel
+
+---
+
+## Especificaciones Técnicas
+
+### Hardware Incluido
+
+- **4–6 Impresoras térmicas:** Compatibles con protocolo ESC/POS (TSC/G&G)
+- **Integración con datáfonos:** Para ventas en sitio
+
+### Seguridad
+
+- Autenticación de usuarios administrativos
+- Encriptación de datos sensibles
+- Backup automático diario
+- Monitoreo 24/7
+- Protección contra ataques DDoS
+
+---
+
+<aside>
+💡
+
+## Stack Tecnológico Completo
+
+</aside>
+
+## Frontend Core
+
+**Framework Principal**
+
+- **Next.js 14 con App Router** - Framework React con renderizado del servidor y rutas basadas en carpetas **✓**
+- **TypeScript** - Añade tipos estáticos para prevenir errores **✓**
+
+**UI y Estilos**
+
+- **Tailwind CSS** - Estilos con clases utilitarias directamente en el HTML  **✓**
+- **shadcn/ui** - Componentes pre-diseñados copiables y personalizables
+- **lucide-react** - Librería de íconos SVG moderna y ligera **✓**
+- **react-icons** - Colección de íconos de múltiples librerías populares **✓**
+- **next/image** - Optimiza imágenes automáticamente con lazy loading **✓**
+- **framer-motion** - Crea animaciones fluidas y transiciones avanzadas **✓**
+- **AOS** - Animaciones al hacer scroll en la página **✓**
+
+**Formularios y Validación**
+
+- **react-hook-form** - Maneja formularios con mínimos re-renders **✓**
+- **zod** - Valida datos con schemas tipados de TypeScript **✓**
+
+## Backend y Database
+
+**Backend as a Service**
+
+- **Supabase** - Backend completo con base de datos, autenticación y APIs en tiempo real
+- **PostgreSQL 15** - Base de datos relacional robusta y escalable
+- **Supabase Auth** - Sistema de autenticación con múltiples proveedores
+- **Supabase Storage** - Almacenamiento de archivos como certificados y PDFs
+- **Supabase Realtime** - Actualizaciones en vivo para el dashboard
+
+**Utilidades**
+
+- **date-fns** - Manipula fechas para early bird y precios regulares **✓**
+
+**ORM**
+
+- **Drizzle ORM** - Consultas SQL tipadas y seguras con TypeScript **✓**
+- **drizzle-kit** - Herramientas CLI para migraciones de base de datos **✓**
+
+**Estado y Caché**
+
+- **TanStack Query** - Cachea y sincroniza datos del servidor automáticamente
+- **Zustand** - Estado global ligero solo si lo necesitas del lado del cliente **✓**
+
+**PWA para Lectura de QR**
+
+- **Next-pwa** al stack para configuración PWA
+
+## QR y Asistencia
+
+**QR Codes**
+
+- **qrcode** - Genera códigos QR para tickets de eventos **✓**
+- **qr-scanner** - Lee códigos QR desde la cámara en PWA **✓**
+
+## Pagos y Transacciones
+
+**OnvoPayments** - Procesa pagos en línea de forma segura **✓** 
+
+## Comunicaciones
+
+**Emails**
+
+- **resend** - Envía emails transaccionales de forma confiable **✓**
+- **@react-email/components** - Crea plantillas de email con componentes React  **✓**
+
+## Documentos y Certificados
+
+**PDFs**
+
+- **@react-pdf/renderer** - Genera PDFs desde componentes React **✓**
+- **Server Actions** - Genera PDFs del lado del servidor de forma segura
+- **Supabase Storage** - Almacena certificados y documentos generados
+
+## Monitoreo y Analytics
+
+**Analytics**
+
+- **Vercel Analytics** - Métricas de rendimiento incluidas con el hosting
+- **Google Analytics 4** - Rastrea comportamiento de usuarios y conversiones **✓**
+- **Meta Pixel** - Rastrea conversiones para ads de Facebook/Instagram
+
+## Testing
+
+**Unit y Integration**
+
+- **Vitest** - Framework rápido para pruebas unitarias y de integración
+
+## Seguridad
+
+**Autenticación**
+
+- **Supabase Auth** - Maneja login, registro y sesiones de usuarios
+- **middleware de Next.js** - Protege rutas privadas del lado del servidor
+
+**Rate Limiting**
+
+- **@upstash/ratelimit con Vercel KV** - Limita peticiones para prevenir spam en compras y escaneos
+- **@upstash/ratelimit** es excelente pero requiere Vercel KV (de pago)
+- Alternativa gratuita: implementar rate limiting en Supabase con RLS policies
+
+## Extras
+
+**Tablas Avanzadas**
+
+- **@tanstack/react-table** - Tablas con sorting, filtros y paginación para el dashboard **✓**
+
+**Gráficas**
+
+- **recharts** - Gráficos interactivos de ventas y asistencia  **✓**
+
+**Excel Export**
+
+- **xlsx** - Exporta datos del dashboard a archivos Excel  **✓**
+
+event-management-system/
+├── src/
+│   ├── app/                                    # Next.js 14 App Router
+│   │   ├── (public)/                          # Rutas públicas (sin layout admin)
+│   │   │   ├── page.tsx                       # Landing page principal
+│   │   │   ├── evento/
+│   │   │   │   └── page.tsx                   # Información del evento
+│   │   │   ├── agenda/
+│   │   │   │   └── page.tsx                   # Programa y horarios
+│   │   │   ├── conferencistas/
+│   │   │   │   └── page.tsx                   # Speakers
+│   │   │   ├── patrocinadores/
+│   │   │   │   └── page.tsx                   # Sponsors
+│   │   │   ├── tickets/
+│   │   │   │   ├── page.tsx                   # Sistema de venta
+│   │   │   │   ├── seleccion/
+│   │   │   │   │   └── page.tsx               # Selección de entradas
+│   │   │   │   ├── formulario/
+│   │   │   │   │   └── page.tsx               # Datos de compradores
+│   │   │   │   ├── pago/
+│   │   │   │   │   └── page.tsx               # Integración OnvoPayments
+│   │   │   │   └── confirmacion/
+│   │   │   │       └── page.tsx               # Confirmación y QR
+│   │   │   └── layout.tsx                     # Layout público
+│   │   │
+│   │   ├── (admin)/                           # Rutas administrativas
+│   │   │   ├── dashboard/
+│   │   │   │   ├── page.tsx                   # Dashboard principal
+│   │   │   │   ├── ventas/
+│   │   │   │   │   └── page.tsx               # Reportes de ventas
+│   │   │   │   ├── asistentes/
+│   │   │   │   │   └── page.tsx               # Gestión de usuarios
+│   │   │   │   ├── asistencia/
+│   │   │   │   │   └── page.tsx               # Control de asistencia
+│   │   │   │   ├── certificados/
+│   │   │   │   │   └── page.tsx               # Generación certificados
+│   │   │   │   └── reportes/
+│   │   │   │       └── page.tsx               # Análisis demográfico
+│   │   │   └── layout.tsx                     # Layout admin
+│   │   │
+│   │   ├── (qr-scanner)/                      # PWA para lectura QR
+│   │   │   ├── scanner/
+│   │   │   │   ├── page.tsx                   # Escáner QR
+│   │   │   │   ├── validacion/
+│   │   │   │   │   └── page.tsx               # Resultado validación
+│   │   │   │   └── historial/
+│   │   │   │       └── page.tsx               # Historial de escaneos
+│   │   │   └── layout.tsx                     # Layout PWA
+│   │   │
+│   │   ├── api/                               # API Routes
+│   │   │   ├── tickets/
+│   │   │   │   ├── create/
+│   │   │   │   │   └── route.ts               # Crear ticket
+│   │   │   │   ├── validate/
+│   │   │   │   │   └── route.ts               # Validar cupón
+│   │   │   │   └── [id]/
+│   │   │   │       └── route.ts               # Obtener ticket
+│   │   │   ├── payments/
+│   │   │   │   ├── webhook/
+│   │   │   │   │   └── route.ts               # Webhook OnvoPayments
+│   │   │   │   └── status/
+│   │   │   │       └── route.ts               # Estado de pago
+│   │   │   ├── qr/
+│   │   │   │   ├── scan/
+│   │   │   │   │   └── route.ts               # Registrar escaneo
+│   │   │   │   └── generate/
+│   │   │   │       └── route.ts               # Generar QR
+│   │   │   ├── certificates/
+│   │   │   │   ├── generate/
+│   │   │   │   │   └── route.ts               # Generar certificado
+│   │   │   │   └── send/
+│   │   │   │       └── route.ts               # Enviar por email
+│   │   │   └── analytics/
+│   │   │       ├── sales/
+│   │   │       │   └── route.ts               # Métricas ventas
+│   │   │       └── attendance/
+│   │   │           └── route.ts               # Métricas asistencia
+│   │   │
+│   │   ├── auth/                              # Autenticación
+│   │   │   ├── login/
+│   │   │   │   └── page.tsx                   # Login admin
+│   │   │   └── callback/
+│   │   │       └── route.ts                   # Callback Supabase
+│   │   │
+│   │   ├── layout.tsx                         # Root layout
+│   │   ├── globals.css                        # Estilos globales
+│   │   └── manifest.json                      # PWA manifest
+│   │
+│   ├── components/                            # Componentes reutilizables
+│   │   ├── ui/                                # shadcn/ui components
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   ├── form.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── select.tsx
+│   │   │   ├── table.tsx
+│   │   │   └── toast.tsx
+│   │   │
+│   │   ├── landing/                           # Componentes landing
+│   │   │   ├── Hero.tsx
+│   │   │   ├── EventInfo.tsx
+│   │   │   ├── Speakers.tsx
+│   │   │   ├── Agenda.tsx
+│   │   │   ├── Sponsors.tsx
+│   │   │   └── Footer.tsx
+│   │   │
+│   │   ├── tickets/                           # Componentes venta
+│   │   │   ├── TicketSelector.tsx
+│   │   │   ├── PriceCalculator.tsx
+│   │   │   ├── CouponInput.tsx
+│   │   │   ├── AttendeeForm.tsx
+│   │   │   └── OrderSummary.tsx
+│   │   │
+│   │   ├── scanner/                           # Componentes escáner
+│   │   │   ├── QRScanner.tsx
+│   │   │   ├── ScanResult.tsx
+│   │   │   └── AttendanceLog.tsx
+│   │   │
+│   │   ├── dashboard/                         # Componentes dashboard
+│   │   │   ├── StatsCard.tsx
+│   │   │   ├── SalesChart.tsx
+│   │   │   ├── AttendeeTable.tsx
+│   │   │   ├── DemographicChart.tsx
+│   │   │   └── ExportButton.tsx
+│   │   │
+│   │   └── shared/                            # Componentes compartidos
+│   │       ├── Navbar.tsx
+│   │       ├── Sidebar.tsx
+│   │       ├── Loading.tsx
+│   │       └── ErrorBoundary.tsx
+│   │
+│   ├── lib/                                   # Utilidades y configuración
+│   │   ├── supabase/
+│   │   │   ├── client.ts                      # Cliente Supabase
+│   │   │   ├── server.ts                      # Server client
+│   │   │   └── middleware.ts                  # Auth middleware
+│   │   │
+│   │   ├── db/                                # Database
+│   │   │   ├── schema.ts                      # Drizzle schema
+│   │   │   ├── migrations/                    # DB migrations
+│   │   │   └── queries.ts                     # Queries reutilizables
+│   │   │
+│   │   ├── payments/
+│   │   │   ├── onvo.ts                        # OnvoPayments SDK
+│   │   │   └── webhook-handler.ts             # Procesar webhooks
+│   │   │
+│   │   ├── qr/
+│   │   │   ├── generator.ts                   # Generar QR codes
+│   │   │   ├── scanner.ts                     # Lógica escaneo
+│   │   │   └── validator.ts                   # Validar QR
+│   │   │
+│   │   ├── certificates/
+│   │   │   ├── generator.ts                   # Generar PDFs
+│   │   │   ├── templates/                     # Plantillas PDF
+│   │   │   │   ├── attendance.tsx
+│   │   │   │   └── participation.tsx
+│   │   │   └── criteria.ts                    # Criterios certificación
+│   │   │
+│   │   ├── email/
+│   │   │   ├── client.ts                      # Resend client
+│   │   │   └── templates/                     # Plantillas email
+│   │   │       ├── ticket-confirmation.tsx
+│   │   │       ├── payment-reminder.tsx
+│   │   │       └── certificate.tsx
+│   │   │
+│   │   ├── analytics/
+│   │   │   ├── google.ts                      # Google Analytics
+│   │   │   ├── meta-pixel.ts                  # Meta Pixel
+│   │   │   └── vercel.ts                      # Vercel Analytics
+│   │   │
+│   │   └── utils/
+│   │       ├── pricing.ts                     # Cálculo precios
+│   │       ├── validation.ts                  # Validaciones
+│   │       ├── date.ts                        # Utilidades fechas
+│   │       ├── export.ts                      # Exportar Excel
+│   │       └── cn.ts                          # className utils
+│   │
+│   ├── hooks/                                 # Custom React hooks
+│   │   ├── useTickets.ts
+│   │   ├── usePayment.ts
+│   │   ├── useQRScanner.ts
+│   │   ├── useAttendance.ts
+│   │   ├── useDashboard.ts
+│   │   └── useAuth.ts
+│   │
+│   ├── store/                                 # Estado global (Zustand)
+│   │   ├── cart.ts                            # Carrito de compra
+│   │   ├── scanner.ts                         # Estado escáner
+│   │   └── dashboard.ts                       # Filtros dashboard
+│   │
+│   ├── types/                                 # TypeScript types
+│   │   ├── ticket.ts
+│   │   ├── user.ts
+│   │   ├── payment.ts
+│   │   ├── attendance.ts
+│   │   ├── certificate.ts
+│   │   └── analytics.ts
+│   │
+│   └── config/                                # Configuración
+│       ├── site.ts                            # Config del sitio
+│       ├── tickets.ts                         # Categorías tickets
+│       ├── pricing.ts                         # Estructura precios
+│       └── event.ts                           # Info del evento
+│
+├── public/                                    # Archivos estáticos
+│   ├── assets/
+│   │   ├── logo.svg
+│   │   ├── speakers/
+│   │   └── sponsors/
+│   └── fonts/
+│
+├── tests/                                     # Tests
+│   ├── unit/
+│   │   ├── pricing.test.ts
+│   │   ├── validation.test.ts
+│   │   └── qr.test.ts
+│   └── integration/
+│       ├── tickets.test.ts
+│       ├── payments.test.ts
+│       └── scanner.test.ts
+│
+├── .env.local                                 # Variables de entorno
+├── next.config.js                             # Configuración Next.js
+├── tailwind.config.js                         # Configuración Tailwind
+├── tsconfig.json                              # Configuración TypeScript
+├── drizzle.config.ts                          # Configuración Drizzle
+├── package.json                               # Dependencias
+└── [README.md](http://readme.md/)                                  # Documentación
+
+## **Usuarios / Asistentes**
+
+---
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_usuario | UUID PK | Identificador único del usuario |
+| nombre | VARCHAR(200) | Nombre |
+| apellido | VARCHAR(200) | Apellido |
+| edad | INTEGER | Edad |
+| genero | VARCHAR(50) | Género |
+| procedencia | VARCHAR(200) | Procedencia geográfica |
+| profesion | VARCHAR(200) | Profesión |
+| sector | ENUM('Público', 'Privado') | Sector laboral |
+| telefono | VARCHAR(20) | Número de teléfono |
+| correo | VARCHAR(200) UNIQUE | Correo electrónico |
+| created_at | TIMESTAMP | Fecha de creación del registro |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Tickets**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_ticket | UUID PK | Identificador único del ticket |
+| id_usuario | UUID FK → Usuarios | Persona asociada al ticket |
+| id_compra | UUID FK → Compras | Compra a la que pertenece |
+| tipo_ticket | ENUM('Pagado', 'Gratuito', 'Conferencista', 'Patrocinador') | Categoría del ticket |
+| modalidad | ENUM('Dia1', 'Dia2', 'Completo') | Días incluidos |
+| incluye_fiesta | BOOLEAN | Indica si incluye fiesta de clausura |
+| precio_pagado | DECIMAL(10,2) | Precio final pagado (después de descuentos) |
+| precio_original | DECIMAL(10,2) | Precio antes de descuentos |
+| id_fase_precio | UUID FK → Fases_Precio | Fase de precio aplicada |
+| estado_ticket | ENUM('Activo', 'Usado', 'Cancelado', 'Reembolsado') | Estado del ticket |
+| qr_code | TEXT UNIQUE | Código QR único generado |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Compras**
+
+*Nueva tabla para agrupar tickets de una misma transacción*
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_compra | UUID PK | Identificador único de la compra |
+| correo_comprador | VARCHAR(200) | Email del comprador (puede diferir de los asistentes) |
+| cantidad_tickets | INTEGER | Número de tickets en esta compra |
+| subtotal | DECIMAL(10,2) | Suma de precios originales |
+| descuento_total | DECIMAL(10,2) | Total descontado por cupones |
+| total | DECIMAL(10,2) | Monto final a pagar |
+| id_cupon | UUID FK → Cupones NULL | Cupón aplicado (si existe) |
+| estado_compra | ENUM('Iniciado', 'Completado', 'Abandonado', 'Cancelado') | Estado del proceso |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Cupones**
+
+*Nueva tabla para gestionar descuentos*
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_cupon | UUID PK | Identificador único del cupón |
+| codigo | VARCHAR(50) UNIQUE | Código del cupón (ej: EARLYBIRD2025) |
+| tipo_descuento | ENUM('Porcentaje', 'MontoFijo') | Tipo de descuento |
+| valor_descuento | DECIMAL(10,2) | Valor del descuento (% o monto) |
+| fecha_inicio | TIMESTAMP | Desde cuándo es válido |
+| fecha_expiracion | TIMESTAMP | Hasta cuándo es válido |
+| usos_maximos | INTEGER NULL | Límite de usos (NULL = ilimitado) |
+| usos_actuales | INTEGER DEFAULT 0 | Cuántas veces se ha usado |
+| activo | BOOLEAN DEFAULT TRUE | Si está activo o no |
+| descripcion | TEXT | Descripción del cupón |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Pagos**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_pago | UUID PK | Identificador único del pago |
+| id_compra | UUID FK → Compras | Compra relacionada |
+| metodo_pago | ENUM('OnvoPayments', 'Datafono') | Método usado |
+| moneda | ENUM('USD', 'CRC') | Moneda usada |
+| monto | DECIMAL(10,2) | Monto cobrado |
+| estado_pago | ENUM('Pendiente', 'Pagado', 'Fallido', 'Reembolsado') | Estado de la transacción |
+| fecha_pago | TIMESTAMP NULL | Momento del pago exitoso |
+| referencia_transaccion | VARCHAR(200) | ID de OnvoPayments |
+| detalles_adicionales | JSONB NULL | Info extra del procesador de pagos |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Fases_Precio**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_fase | UUID PK | Identificador de la fase |
+| nombre_fase | VARCHAR(100) | Early Bird, Regular, Estudiante, Last Minute |
+| fecha_inicio | TIMESTAMP | Inicio de la fase |
+| fecha_fin | TIMESTAMP | Fin de la fase |
+| precio_dia_individual | DECIMAL(10,2) | Precio por un día |
+| precio_completo | DECIMAL(10,2) | Precio entrada completa |
+| precio_fiesta | DECIMAL(10,2) | Costo adicional fiesta |
+| descripcion | TEXT | Condiciones de la fase |
+| activo | BOOLEAN DEFAULT TRUE | Si está activa |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Asistencia**
+
+*Rediseñada para tracking detallado*
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_asistencia | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets | Ticket escaneado |
+| tipo_registro | ENUM('Entrada_Evento', 'Salida_Evento') | Tipo de escaneo |
+| fecha_hora | TIMESTAMP | Momento exacto del escaneo |
+| escaneado_por | UUID FK → Administradores | Admin que hizo el escaneo |
+| ubicacion | VARCHAR(200) NULL | Punto de escaneo (ej: "Entrada Principal", "Salón A") |
+| created_at | TIMESTAMP | Timestamp de creación |
+
+---
+
+## **Asistencia_Resumen**
+
+*Nueva tabla para facilitar queries de certificación*
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_resumen | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets UNIQUE | Ticket asociado |
+| dia_1_entrada | TIMESTAMP NULL | Primera entrada día 1 |
+| dia_1_salida | TIMESTAMP NULL | Última salida día 1 |
+| dia_2_entrada | TIMESTAMP NULL | Primera entrada día 2 |
+| dia_2_salida | TIMESTAMP NULL | Última salida día 2 |
+| cumple_certificacion | BOOLEAN | Si cumple requisitos para certificado |
+| updated_at | TIMESTAMP | Última actualización |
+
+---
+
+## **Charlas / Agenda**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_charla | UUID PK | Identificador de la charla |
+| titulo | VARCHAR(300) | Título de la charla |
+| descripcion | TEXT | Breve resumen |
+| fecha | DATE | Día de la charla |
+| hora_inicio | TIME | Inicio de la charla |
+| hora_fin | TIME | Fin de la charla |
+| duracion_minutos | INTEGER | Duración en minutos |
+| id_conferencista | UUID FK → Conferencistas | Ponente responsable |
+| ubicacion | VARCHAR(200) | Salón o espacio |
+| cupo_maximo | INTEGER NULL | Capacidad (si aplica) |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Conferencistas**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_conferencista | UUID PK | Identificador único |
+| nombre | VARCHAR(200) | Nombre completo |
+| biografia | TEXT | Breve bio |
+| foto_url | TEXT | URL de foto del conferencista |
+| correo | VARCHAR(200) NULL | Contacto (opcional) |
+| organizacion | VARCHAR(200) NULL | Empresa/institución |
+| redes_sociales | JSONB NULL | Links a redes sociales |
+| orden_display | INTEGER | Orden de aparición en la web |
+| activo | BOOLEAN DEFAULT TRUE | Si se muestra públicamente |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Patrocinadores**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_patrocinador | UUID PK | Identificador único |
+| nombre | VARCHAR(200) | Nombre de la empresa |
+| logo_url | TEXT | URL del logo |
+| orden_display | INTEGER | Orden de aparición |
+| url_sitio_web | TEXT NULL | Sitio web del patrocinador |
+| descripcion | TEXT NULL | Descripción breve |
+| activo | BOOLEAN DEFAULT TRUE | Si se muestra públicamente |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+## **Certificados**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_certificado | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets UNIQUE | Ticket asociado |
+| id_usuario | UUID FK → Usuarios | Usuario que recibe el certificado |
+| tipo_certificado | ENUM('Participacion', 'Aprovechamiento') | Tipo generado |
+| fecha_emision | TIMESTAMP | Fecha de generación |
+| archivo_url | TEXT | Enlace al PDF en Supabase Storage |
+| estado | ENUM('Generado', 'Enviado', 'Error') | Estado del certificado |
+| fecha_envio | TIMESTAMP NULL | Cuándo se envió por email |
+| created_at | TIMESTAMP | Timestamp de creación |
+| codigo_verificacion | VARCHAR(50) |  |
+
+---
+
+## **Administradores**
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| id_admin | UUID PK | Identificador único |
+| nombre | VARCHAR(200) | Nombre completo |
+| correo | VARCHAR(200) UNIQUE | Correo |
+| rol | ENUM('SuperAdmin', 'Admin', 'Staff', 'Scanner') | Nivel de acceso |
+| password_hash | TEXT | Contraseña encriptada (Supabase Auth) |
+| activo | BOOLEAN DEFAULT TRUE | Si puede acceder |
+| ultimo_acceso | TIMESTAMP NULL | Última vez que ingresó |
+| created_at | TIMESTAMP | Timestamp de creación |
+| updated_at | TIMESTAMP | Timestamp de actualización |
+
+---
+
+# Plan de Trabajo - 3 Semanas (MVP Funcional)
+
+**Objetivo:** Landing page funcional + Sistema de compra de tickets con pago
+
+---
+
+## **Semana 1-2: Setup + Landing Page + Base de Datos**
+
+### **Configuración del proyecto**
+
+- [ ]  Crear proyecto Next.js 14 con TypeScript
+- [ ]  Configurar Tailwind CSS + shadcn/ui
+- [ ]  Setup Supabase (proyecto, base de datos)
+- [ ]  Configurar Drizzle ORM + migraciones
+- [ ]  Crear schema de base de datos (todas las tablas)
+- [ ]  Variables de entorno (.env.local)
+- [ ]  Git repo + primer commit
+
+### **Sistema de precios + Cupones**
+
+- [ ]  Crear tabla Fases_Precio con datos iniciales
+- [ ]  Lógica para calcular precio según fecha actual
+- [ ]  Sistema de cupones (validación backend)
+- [ ]  Componente PriceCalculator
+
+### **Flujo de selección**
+
+- [ ]  `/tickets/seleccion` - Selector de tickets
+    - [ ]  Elegir modalidad (Día 1, Día 2, Completo)
+    - [ ]  Cantidad de tickets
+    - [ ]  Checkbox fiesta de clausura
+    - [ ]  Input para cupón + validación
+- [ ]  Zustand store para carrito de compra
+- [ ]  Resumen de orden (OrderSummary component)
+
+---
+
+## **Semana 2: Sistema de Compra de Tickets**
+
+### **Formulario de datos**
+
+- [ ]  `/tickets/formulario` - Formulario por cada ticket
+- [ ]  React Hook Form + Zod validation
+- [ ]  Campos: nombre, apellido, edad, género, procedencia, profesión, sector, teléfono, correo
+- [ ]  Guardar datos en Zustand
+- [ ]  Botón "Continuar a pago"
+
+### **Integración de pagos**
+
+- [ ]  Configurar OnvoPayments (credenciales sandbox)
+- [ ]  `/tickets/pago` - Página de pago
+- [ ]  API Route: `/api/payments/create`
+    - [ ]  Crear registros: Compra, Tickets, Usuarios, Pago
+    - [ ]  Iniciar transacción OnvoPayments
+- [ ]  API Route: `/api/payments/webhook`
+    - [ ]  Procesar confirmación de pago
+    - [ ]  Actualizar estado_compra y estado_pago
+    - [ ]  **Generar QR codes** para cada ticket
+- [ ]  `/tickets/confirmacion` - Página de éxito
+    - [ ]  Mostrar resumen de compra
+    - [ ]  **Mostrar QR codes** (uno por ticket)
+
+### **Landing Page Completa**
+
+- [ ]  Layout principal (Navbar, Footer)
+- [ ]  Hero section con CTA a compra
+- [ ]  Sección: Información del evento
+- [ ]  Sección: Agenda (lista de charlas desde DB)
+- [ ]  Sección: Conferencistas (cards con fotos)
+- [ ]  Sección: Patrocinadores (logos por nivel)
+- [ ]  Sección: Contacto
+- [ ]  Responsive design (mobile/tablet/desktop)
+- [ ]  Integrar Google Analytics + Meta Pixel
+
+---
+
+## **Semana 3: Emails + Dashboard Básico + Testing**
+
+### **Sistema de emails**
+
+- [ ]  Configurar Resend (API key)
+- [ ]  Plantilla email: Confirmación de compra con QRs
+- [ ]  Enviar email automático después del pago exitoso
+- [ ]  Plantilla email: Recordatorio de pago (abandonados)
+
+### **Dashboard administrativo básico**
+
+- [ ]  Login admin (Supabase Auth)
+- [ ]  `/dashboard` - Vista principal
+    - [ ]  Métricas: Total ventas, ingresos, tickets vendidos
+    - [ ]  Gráfica de ventas por día (recharts)
+- [ ]  `/dashboard/asistentes` - Lista de compradores
+    - [ ]  Tabla con filtros básicos
+    - [ ]  Exportar a Excel
+
+### **Testing y ajustes**
+
+- [ ]  Probar flujo completo de compra
+- [ ]  Revisar responsive en móviles
+- [ ]  Verificar emails funcionan
+- [ ]  Revisar cálculo de precios y cupones
+- [ ]  Probar pagos sandbox
+
+### **Deploy y buffer**
+
+- [ ]  Deploy en Vercel
+- [ ]  Configurar dominio (si aplica)
+- [ ]  Testing en producción
+- [ ]  Documentación básica para el equipo
