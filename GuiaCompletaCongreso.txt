@@ -344,252 +344,305 @@ Operación: Mayo 2026
 - **xlsx** - Exporta datos del dashboard a archivos Excel  **✓**
 
 event-management-system/
-├── src/
-│   ├── app/                                    # Next.js 14 App Router
-│   │   ├── (public)/                          # Rutas públicas (sin layout admin)
-│   │   │   ├── page.tsx                       # Landing page principal
-│   │   │   ├── evento/
-│   │   │   │   └── page.tsx                   # Información del evento
-│   │   │   ├── agenda/
-│   │   │   │   └── page.tsx                   # Programa y horarios
-│   │   │   ├── conferencistas/
-│   │   │   │   └── page.tsx                   # Speakers
-│   │   │   ├── patrocinadores/
-│   │   │   │   └── page.tsx                   # Sponsors
-│   │   │   ├── tickets/
-│   │   │   │   ├── page.tsx                   # Sistema de venta
-│   │   │   │   ├── seleccion/
-│   │   │   │   │   └── page.tsx               # Selección de entradas
-│   │   │   │   ├── formulario/
-│   │   │   │   │   └── page.tsx               # Datos de compradores
-│   │   │   │   ├── pago/
-│   │   │   │   │   └── page.tsx               # Integración OnvoPayments
-│   │   │   │   └── confirmacion/
-│   │   │   │       └── page.tsx               # Confirmación y QR
-│   │   │   └── layout.tsx                     # Layout público
-│   │   │
-│   │   ├── (admin)/                           # Rutas administrativas
-│   │   │   ├── dashboard/
-│   │   │   │   ├── page.tsx                   # Dashboard principal
-│   │   │   │   ├── ventas/
-│   │   │   │   │   └── page.tsx               # Reportes de ventas
-│   │   │   │   ├── asistentes/
-│   │   │   │   │   └── page.tsx               # Gestión de usuarios
-│   │   │   │   ├── asistencia/
-│   │   │   │   │   └── page.tsx               # Control de asistencia
-│   │   │   │   ├── certificados/
-│   │   │   │   │   └── page.tsx               # Generación certificados
-│   │   │   │   └── reportes/
-│   │   │   │       └── page.tsx               # Análisis demográfico
-│   │   │   └── layout.tsx                     # Layout admin
-│   │   │
-│   │   ├── (qr-scanner)/                      # PWA para lectura QR
-│   │   │   ├── scanner/
-│   │   │   │   ├── page.tsx                   # Escáner QR
-│   │   │   │   ├── validacion/
-│   │   │   │   │   └── page.tsx               # Resultado validación
-│   │   │   │   └── historial/
-│   │   │   │       └── page.tsx               # Historial de escaneos
-│   │   │   └── layout.tsx                     # Layout PWA
-│   │   │
-│   │   ├── api/                               # API Routes
-│   │   │   ├── tickets/
-│   │   │   │   ├── create/
-│   │   │   │   │   └── route.ts               # Crear ticket
-│   │   │   │   ├── validate/
-│   │   │   │   │   └── route.ts               # Validar cupón
-│   │   │   │   └── [id]/
-│   │   │   │       └── route.ts               # Obtener ticket
-│   │   │   ├── payments/
-│   │   │   │   ├── webhook/
-│   │   │   │   │   └── route.ts               # Webhook OnvoPayments
-│   │   │   │   └── status/
-│   │   │   │       └── route.ts               # Estado de pago
-│   │   │   ├── qr/
-│   │   │   │   ├── scan/
-│   │   │   │   │   └── route.ts               # Registrar escaneo
-│   │   │   │   └── generate/
-│   │   │   │       └── route.ts               # Generar QR
-│   │   │   ├── certificates/
-│   │   │   │   ├── generate/
-│   │   │   │   │   └── route.ts               # Generar certificado
-│   │   │   │   └── send/
-│   │   │   │       └── route.ts               # Enviar por email
-│   │   │   └── analytics/
-│   │   │       ├── sales/
-│   │   │       │   └── route.ts               # Métricas ventas
-│   │   │       └── attendance/
-│   │   │           └── route.ts               # Métricas asistencia
-│   │   │
-│   │   ├── auth/                              # Autenticación
-│   │   │   ├── login/
-│   │   │   │   └── page.tsx                   # Login admin
-│   │   │   └── callback/
-│   │   │       └── route.ts                   # Callback Supabase
-│   │   │
-│   │   ├── layout.tsx                         # Root layout
-│   │   ├── globals.css                        # Estilos globales
-│   │   └── manifest.json                      # PWA manifest
-│   │
-│   ├── components/                            # Componentes reutilizables
-│   │   ├── ui/                                # shadcn/ui components
-│   │   │   ├── button.tsx
-│   │   │   ├── card.tsx
-│   │   │   ├── dialog.tsx
-│   │   │   ├── form.tsx
-│   │   │   ├── input.tsx
-│   │   │   ├── select.tsx
-│   │   │   ├── table.tsx
-│   │   │   └── toast.tsx
-│   │   │
-│   │   ├── landing/                           # Componentes landing
-│   │   │   ├── Hero.tsx
-│   │   │   ├── EventInfo.tsx
-│   │   │   ├── Speakers.tsx
-│   │   │   ├── Agenda.tsx
-│   │   │   ├── Sponsors.tsx
-│   │   │   └── Footer.tsx
-│   │   │
-│   │   ├── tickets/                           # Componentes venta
-│   │   │   ├── TicketSelector.tsx
-│   │   │   ├── PriceCalculator.tsx
-│   │   │   ├── CouponInput.tsx
-│   │   │   ├── AttendeeForm.tsx
-│   │   │   └── OrderSummary.tsx
-│   │   │
-│   │   ├── scanner/                           # Componentes escáner
-│   │   │   ├── QRScanner.tsx
-│   │   │   ├── ScanResult.tsx
-│   │   │   └── AttendanceLog.tsx
-│   │   │
-│   │   ├── dashboard/                         # Componentes dashboard
-│   │   │   ├── StatsCard.tsx
-│   │   │   ├── SalesChart.tsx
-│   │   │   ├── AttendeeTable.tsx
-│   │   │   ├── DemographicChart.tsx
-│   │   │   └── ExportButton.tsx
-│   │   │
-│   │   └── shared/                            # Componentes compartidos
-│   │       ├── Navbar.tsx
-│   │       ├── Sidebar.tsx
-│   │       ├── Loading.tsx
-│   │       └── ErrorBoundary.tsx
-│   │
-│   ├── lib/                                   # Utilidades y configuración
-│   │   ├── supabase/
-│   │   │   ├── client.ts                      # Cliente Supabase
-│   │   │   ├── server.ts                      # Server client
-│   │   │   └── middleware.ts                  # Auth middleware
-│   │   │
-│   │   ├── db/                                # Database
-│   │   │   ├── schema.ts                      # Drizzle schema
-│   │   │   ├── migrations/                    # DB migrations
-│   │   │   └── queries.ts                     # Queries reutilizables
-│   │   │
-│   │   ├── payments/
-│   │   │   ├── onvo.ts                        # OnvoPayments SDK
-│   │   │   └── webhook-handler.ts             # Procesar webhooks
-│   │   │
-│   │   ├── qr/
-│   │   │   ├── generator.ts                   # Generar QR codes
-│   │   │   ├── scanner.ts                     # Lógica escaneo
-│   │   │   └── validator.ts                   # Validar QR
-│   │   │
-│   │   ├── certificates/
-│   │   │   ├── generator.ts                   # Generar PDFs
-│   │   │   ├── templates/                     # Plantillas PDF
-│   │   │   │   ├── attendance.tsx
-│   │   │   │   └── participation.tsx
-│   │   │   └── criteria.ts                    # Criterios certificación
-│   │   │
-│   │   ├── email/
-│   │   │   ├── client.ts                      # Resend client
-│   │   │   └── templates/                     # Plantillas email
-│   │   │       ├── ticket-confirmation.tsx
-│   │   │       ├── payment-reminder.tsx
-│   │   │       └── certificate.tsx
-│   │   │
-│   │   ├── analytics/
-│   │   │   ├── google.ts                      # Google Analytics
-│   │   │   ├── meta-pixel.ts                  # Meta Pixel
-│   │   │   └── vercel.ts                      # Vercel Analytics
-│   │   │
-│   │   └── utils/
-│   │       ├── pricing.ts                     # Cálculo precios
-│   │       ├── validation.ts                  # Validaciones
-│   │       ├── date.ts                        # Utilidades fechas
-│   │       ├── export.ts                      # Exportar Excel
-│   │       └── cn.ts                          # className utils
-│   │
-│   ├── hooks/                                 # Custom React hooks
-│   │   ├── useTickets.ts
-│   │   ├── usePayment.ts
-│   │   ├── useQRScanner.ts
-│   │   ├── useAttendance.ts
-│   │   ├── useDashboard.ts
-│   │   └── useAuth.ts
-│   │
-│   ├── store/                                 # Estado global (Zustand)
-│   │   ├── cart.ts                            # Carrito de compra
-│   │   ├── scanner.ts                         # Estado escáner
-│   │   └── dashboard.ts                       # Filtros dashboard
-│   │
-│   ├── types/                                 # TypeScript types
-│   │   ├── ticket.ts
-│   │   ├── user.ts
-│   │   ├── payment.ts
-│   │   ├── attendance.ts
-│   │   ├── certificate.ts
-│   │   └── analytics.ts
-│   │
-│   └── config/                                # Configuración
-│       ├── site.ts                            # Config del sitio
-│       ├── tickets.ts                         # Categorías tickets
-│       ├── pricing.ts                         # Estructura precios
-│       └── event.ts                           # Info del evento
 │
-├── public/                                    # Archivos estáticos
+├── components.json
+├── drizzle.config.ts
+├── eslint.config.mjs
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── tailwind.config.ts
+├── tsconfig.json
+├── [README.md](http://readme.md/)
+├── .env.local
+│
+├── public/
 │   ├── assets/
 │   │   ├── logo.svg
 │   │   ├── speakers/
 │   │   └── sponsors/
 │   └── fonts/
 │
-├── tests/                                     # Tests
-│   ├── unit/
-│   │   ├── pricing.test.ts
-│   │   ├── validation.test.ts
-│   │   └── qr.test.ts
-│   └── integration/
-│       ├── tickets.test.ts
-│       ├── payments.test.ts
-│       └── scanner.test.ts
+└── src/
 │
-├── .env.local                                 # Variables de entorno
-├── next.config.js                             # Configuración Next.js
-├── tailwind.config.js                         # Configuración Tailwind
-├── tsconfig.json                              # Configuración TypeScript
-├── drizzle.config.ts                          # Configuración Drizzle
-├── package.json                               # Dependencias
-└── [README.md](http://readme.md/)                                  # Documentación
+├── actions/                                # Server Actions de Next.js
+│   ├── tickets.ts
+│   ├── payments.ts
+│   ├── certificates.ts
+│   └── analytics.ts
+│
+├── app/
+│   │
+│   ├── (public)/                          # Rutas públicas
+│   │   ├── page.tsx                       # Landing page principal
+│   │   ├── layout.tsx                     # Layout público
+│   │   │
+│   │   ├── evento/
+│   │   │   └── page.tsx                   # Información del evento
+│   │   │
+│   │   ├── agenda/
+│   │   │   └── page.tsx                   # Programa y horarios
+│   │   │
+│   │   ├── conferencistas/
+│   │   │   └── page.tsx                   # Speakers
+│   │   │
+│   │   ├── patrocinadores/
+│   │   │   └── page.tsx                   # Sponsors
+│   │   │
+│   │   └── tickets/
+│   │       ├── page.tsx                   # Sistema de venta
+│   │       ├── seleccion/
+│   │       │   └── page.tsx               # Selección de entradas
+│   │       ├── formulario/
+│   │       │   └── page.tsx               # Datos de compradores
+│   │       ├── pago/
+│   │       │   └── page.tsx               # Integración OnvoPayments
+│   │       └── confirmacion/
+│   │           └── page.tsx               # Confirmación y QR
+│   │
+│   ├── (admin)/                           # Rutas administrativas
+│   │   ├── layout.tsx                     # Layout admin
+│   │   │
+│   │   └── dashboard/
+│   │       ├── page.tsx                   # Dashboard principal
+│   │       │
+│   │       ├── ventas/
+│   │       │   └── page.tsx               # Reportes de ventas
+│   │       │
+│   │       ├── asistentes/
+│   │       │   └── page.tsx               # Gestión de usuarios
+│   │       │
+│   │       ├── asistencia/
+│   │       │   └── page.tsx               # Control de asistencia
+│   │       │
+│   │       ├── certificados/
+│   │       │   └── page.tsx               # Generación certificados
+│   │       │
+│   │       └── reportes/
+│   │           └── page.tsx               # Análisis demográfico
+│   │
+│   ├── (qr-scanner)/                      # PWA para lectura QR
+│   │   ├── layout.tsx                     # Layout PWA
+│   │   │
+│   │   └── scanner/
+│   │       ├── page.tsx                   # Escáner QR
+│   │       │
+│   │       ├── validacion/
+│   │       │   └── page.tsx               # Resultado validación
+│   │       │
+│   │       └── historial/
+│   │           └── page.tsx               # Historial de escaneos
+│   │
+│   ├── api/                               # API Routes
+│   │   │
+│   │   ├── tickets/
+│   │   │   ├── create/
+│   │   │   │   └── route.ts               # Crear ticket
+│   │   │   ├── validate/
+│   │   │   │   └── route.ts               # Validar cupón
+│   │   │   └── [id]/
+│   │   │       └── route.ts               # Obtener ticket por ID
+│   │   │
+│   │   ├── payments/
+│   │   │   ├── webhook/
+│   │   │   │   └── route.ts               # Webhook OnvoPayments
+│   │   │   └── status/
+│   │   │       └── route.ts               # Estado de pago
+│   │   │
+│   │   ├── qr/
+│   │   │   ├── generate/
+│   │   │   │   └── route.ts               # Generar QR
+│   │   │   └── scan/
+│   │   │       └── route.ts               # Registrar escaneo
+│   │   │
+│   │   ├── certificates/
+│   │   │   ├── generate/
+│   │   │   │   └── route.ts               # Generar certificado
+│   │   │   └── send/
+│   │   │       └── route.ts               # Enviar por email
+│   │   │
+│   │   └── analytics/
+│   │       ├── sales/
+│   │       │   └── route.ts               # Métricas ventas
+│   │       └── attendance/
+│   │           └── route.ts               # Métricas asistencia
+│   │
+│   ├── auth/                              # Autenticación
+│   │   ├── login/
+│   │   │   └── page.tsx                   # Login admin
+│   │   └── callback/
+│   │       └── route.ts                   # Callback Supabase
+│   │
+│   ├── favicon.ico
+│   ├── globals.css                        # Estilos globales
+│   ├── layout.tsx                         # Root layout
+│   ├── page.tsx                           # Root page (redirect)
+│   └── manifest.json                      # PWA manifest
+│
+├── components/                            # Componentes reutilizables
+│   │
+│   ├── ui/                                # shadcn/ui components
+│   │   ├── badge.tsx
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── checkbox.tsx
+│   │   ├── dialog.tsx
+│   │   ├── dropdown-menu.tsx
+│   │   ├── form.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   ├── select.tsx
+│   │   ├── table.tsx
+│   │   └── toast.tsx
+│   │
+│   ├── landing/                           # Componentes landing
+│   │   ├── Hero.tsx
+│   │   ├── EventInfo.tsx
+│   │   ├── Speakers.tsx
+│   │   ├── Agenda.tsx
+│   │   ├── Sponsors.tsx
+│   │   └── Footer.tsx
+│   │
+│   ├── tickets/                           # Componentes venta
+│   │   ├── TicketSelector.tsx
+│   │   ├── PriceCalculator.tsx
+│   │   ├── CouponInput.tsx
+│   │   ├── AttendeeForm.tsx
+│   │   └── OrderSummary.tsx
+│   │
+│   ├── scanner/                           # Componentes escáner
+│   │   ├── QRScanner.tsx
+│   │   ├── ScanResult.tsx
+│   │   └── AttendanceLog.tsx
+│   │
+│   ├── dashboard/                         # Componentes dashboard
+│   │   ├── StatsCard.tsx
+│   │   ├── SalesChart.tsx
+│   │   ├── AttendeeTable.tsx
+│   │   ├── DemographicChart.tsx
+│   │   └── ExportButton.tsx
+│   │
+│   └── shared/                            # Componentes compartidos
+│       ├── Navbar.tsx
+│       ├── Sidebar.tsx
+│       ├── Loading.tsx
+│       └── ErrorBoundary.tsx
+│
+├── config/                                # Configuración
+│   ├── site.ts                            # Config del sitio
+│   ├── event.ts                           # Info del evento
+│   ├── tickets.ts                         # Categorías tickets
+│   └── pricing.ts                         # Estructura precios
+│
+├── constants/                             # Constantes globales
+│   ├── index.ts
+│   ├── roles.ts
+│   └── status.ts
+│
+├── hooks/                                 # Custom React hooks
+│   ├── useTickets.ts
+│   ├── usePayment.ts
+│   ├── useQRScanner.ts
+│   ├── useAttendance.ts
+│   ├── useDashboard.ts
+│   └── useAuth.ts
+│
+├── lib/                                   # Utilidades y configuración
+│   │
+│   ├── supabase/
+│   │   ├── client.ts                      # Cliente Supabase
+│   │   ├── server.ts                      # Server client
+│   │   └── middleware.ts                  # Auth middleware
+│   │
+│   ├── db/                                # Database
+│   │   ├── index.ts                       # Export principal
+│   │   ├── schema.ts                      # Drizzle schema
+│   │   ├── migrations/                    # DB migrations
+│   │   │   ├── 0000_acoustic_talkback.sql
+│   │   │   └── meta/
+│   │   │       ├── 0000_snapshot.json
+│   │   │       └── _journal.json
+│   │   └── queries.ts                     # Queries reutilizables
+│   │
+│   ├── payments/
+│   │   ├── onvo.ts                        # OnvoPayments SDK
+│   │   └── webhook-handler.ts             # Procesar webhooks
+│   │
+│   ├── qr/
+│   │   ├── generator.ts                   # Generar QR codes
+│   │   ├── scanner.ts                     # Lógica escaneo
+│   │   └── validator.ts                   # Validar QR
+│   │
+│   ├── certificates/
+│   │   ├── generator.ts                   # Generar PDFs
+│   │   ├── criteria.ts                    # Criterios certificación
+│   │   └── templates/                     # Plantillas PDF
+│   │       ├── attendance.tsx
+│   │       └── participation.tsx
+│   │
+│   ├── email/
+│   │   ├── client.ts                      # Resend client
+│   │   └── templates/                     # Plantillas email
+│   │       ├── ticket-confirmation.tsx
+│   │       ├── payment-reminder.tsx
+│   │       └── certificate.tsx
+│   │
+│   ├── analytics/
+│   │   ├── google.ts                      # Google Analytics
+│   │   ├── meta-pixel.ts                  # Meta Pixel
+│   │   └── vercel.ts                      # Vercel Analytics
+│   │
+│   └── utils/
+│       ├── utils.ts                       # Utilidades generales (cn, etc)
+│       ├── pricing.ts                     # Cálculo precios
+│       ├── validation.ts                  # Validaciones
+│       ├── date.ts                        # Utilidades fechas
+│       └── export.ts                      # Exportar Excel
+│
+├── schemas/                               # Validaciones Zod
+│   ├── ticket.ts
+│   ├── user.ts
+│   ├── payment.ts
+│   └── auth.ts
+│
+├── store/                                 # Estado global (Zustand)
+│   ├── cart.ts                            # Carrito de compra
+│   ├── scanner.ts                         # Estado escáner
+│   └── dashboard.ts                       # Filtros dashboard
+│
+└── types/                                 # TypeScript types
+├── index.ts                           # Export central
+├── ticket.ts
+├── user.ts
+├── payment.ts
+├── attendance.ts
+├── certificate.ts
+└── analytics.ts
 
-## **Usuarios / Asistentes**
+## 
+
+Claro, aquí están las tablas en formato texto para tu Notion:
 
 ---
 
+## **Usuarios / Asistentes**
+
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_usuario | UUID PK | Identificador único del usuario |
+| id | UUID PK | Identificador único del usuario |
 | nombre | VARCHAR(200) | Nombre |
 | apellido | VARCHAR(200) | Apellido |
 | edad | INTEGER | Edad |
-| genero | VARCHAR(50) | Género |
+| genero | ENUM('Masculino', 'Femenino', 'Otro') | Género |
 | procedencia | VARCHAR(200) | Procedencia geográfica |
 | profesion | VARCHAR(200) | Profesión |
-| sector | ENUM('Público', 'Privado') | Sector laboral |
+| sector | ENUM('Publico', 'Privado') | Sector laboral |
 | telefono | VARCHAR(20) | Número de teléfono |
 | correo | VARCHAR(200) UNIQUE | Correo electrónico |
-| created_at | TIMESTAMP | Fecha de creación del registro |
+| created_at | TIMESTAMP | Timestamp de creación |
 | updated_at | TIMESTAMP | Timestamp de actualización |
 
 ---
@@ -598,15 +651,15 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_ticket | UUID PK | Identificador único del ticket |
-| id_usuario | UUID FK → Usuarios | Persona asociada al ticket |
-| id_compra | UUID FK → Compras | Compra a la que pertenece |
+| id | UUID PK | Identificador único del ticket |
+| id_usuario | UUID FK → Usuarios (RESTRICT) | Persona asociada al ticket |
+| id_compra | UUID FK → Compras (CASCADE) | Compra a la que pertenece |
 | tipo_ticket | ENUM('Pagado', 'Gratuito', 'Conferencista', 'Patrocinador') | Categoría del ticket |
 | modalidad | ENUM('Dia1', 'Dia2', 'Completo') | Días incluidos |
 | incluye_fiesta | BOOLEAN | Indica si incluye fiesta de clausura |
 | precio_pagado | DECIMAL(10,2) | Precio final pagado (después de descuentos) |
 | precio_original | DECIMAL(10,2) | Precio antes de descuentos |
-| id_fase_precio | UUID FK → Fases_Precio | Fase de precio aplicada |
+| id_fase_precio | UUID FK → Fases_Precio (SET NULL) | Fase de precio aplicada |
 | estado_ticket | ENUM('Activo', 'Usado', 'Cancelado', 'Reembolsado') | Estado del ticket |
 | qr_code | TEXT UNIQUE | Código QR único generado |
 | created_at | TIMESTAMP | Timestamp de creación |
@@ -616,17 +669,15 @@ event-management-system/
 
 ## **Compras**
 
-*Nueva tabla para agrupar tickets de una misma transacción*
-
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_compra | UUID PK | Identificador único de la compra |
-| correo_comprador | VARCHAR(200) | Email del comprador (puede diferir de los asistentes) |
+| id | UUID PK | Identificador único de la compra |
+| correo_comprador | VARCHAR(200) | Email del comprador |
 | cantidad_tickets | INTEGER | Número de tickets en esta compra |
 | subtotal | DECIMAL(10,2) | Suma de precios originales |
 | descuento_total | DECIMAL(10,2) | Total descontado por cupones |
 | total | DECIMAL(10,2) | Monto final a pagar |
-| id_cupon | UUID FK → Cupones NULL | Cupón aplicado (si existe) |
+| id_cupon | UUID FK → Cupones (SET NULL) | Cupón aplicado (si existe) |
 | estado_compra | ENUM('Iniciado', 'Completado', 'Abandonado', 'Cancelado') | Estado del proceso |
 | created_at | TIMESTAMP | Timestamp de creación |
 | updated_at | TIMESTAMP | Timestamp de actualización |
@@ -635,14 +686,12 @@ event-management-system/
 
 ## **Cupones**
 
-*Nueva tabla para gestionar descuentos*
-
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_cupon | UUID PK | Identificador único del cupón |
-| codigo | VARCHAR(50) UNIQUE | Código del cupón (ej: EARLYBIRD2025) |
+| id | UUID PK | Identificador único del cupón |
+| codigo | VARCHAR(50) UNIQUE | Código del cupón |
 | tipo_descuento | ENUM('Porcentaje', 'MontoFijo') | Tipo de descuento |
-| valor_descuento | DECIMAL(10,2) | Valor del descuento (% o monto) |
+| valor_descuento | DECIMAL(10,2) | Valor del descuento |
 | fecha_inicio | TIMESTAMP | Desde cuándo es válido |
 | fecha_expiracion | TIMESTAMP | Hasta cuándo es válido |
 | usos_maximos | INTEGER NULL | Límite de usos (NULL = ilimitado) |
@@ -658,8 +707,8 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_pago | UUID PK | Identificador único del pago |
-| id_compra | UUID FK → Compras | Compra relacionada |
+| id | UUID PK | Identificador único del pago |
+| id_compra | UUID FK → Compras (CASCADE) | Compra relacionada |
 | metodo_pago | ENUM('OnvoPayments', 'Datafono') | Método usado |
 | moneda | ENUM('USD', 'CRC') | Moneda usada |
 | monto | DECIMAL(10,2) | Monto cobrado |
@@ -676,7 +725,7 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_fase | UUID PK | Identificador de la fase |
+| id | UUID PK | Identificador de la fase |
 | nombre_fase | VARCHAR(100) | Early Bird, Regular, Estudiante, Last Minute |
 | fecha_inicio | TIMESTAMP | Inicio de la fase |
 | fecha_fin | TIMESTAMP | Fin de la fase |
@@ -692,28 +741,24 @@ event-management-system/
 
 ## **Asistencia**
 
-*Rediseñada para tracking detallado*
-
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_asistencia | UUID PK | Identificador único |
-| id_ticket | UUID FK → Tickets | Ticket escaneado |
+| id | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets (CASCADE) | Ticket escaneado |
 | tipo_registro | ENUM('Entrada_Evento', 'Salida_Evento') | Tipo de escaneo |
 | fecha_hora | TIMESTAMP | Momento exacto del escaneo |
-| escaneado_por | UUID FK → Administradores | Admin que hizo el escaneo |
-| ubicacion | VARCHAR(200) NULL | Punto de escaneo (ej: "Entrada Principal", "Salón A") |
+| escaneado_por | UUID FK → Administradores (SET NULL) | Admin que hizo el escaneo |
+| ubicacion | VARCHAR(200) NULL | Punto de escaneo |
 | created_at | TIMESTAMP | Timestamp de creación |
 
 ---
 
 ## **Asistencia_Resumen**
 
-*Nueva tabla para facilitar queries de certificación*
-
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_resumen | UUID PK | Identificador único |
-| id_ticket | UUID FK → Tickets UNIQUE | Ticket asociado |
+| id | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets (CASCADE) UNIQUE | Ticket asociado |
 | dia_1_entrada | TIMESTAMP NULL | Primera entrada día 1 |
 | dia_1_salida | TIMESTAMP NULL | Última salida día 1 |
 | dia_2_entrada | TIMESTAMP NULL | Primera entrada día 2 |
@@ -727,14 +772,14 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_charla | UUID PK | Identificador de la charla |
+| id | UUID PK | Identificador de la charla |
 | titulo | VARCHAR(300) | Título de la charla |
 | descripcion | TEXT | Breve resumen |
 | fecha | DATE | Día de la charla |
 | hora_inicio | TIME | Inicio de la charla |
 | hora_fin | TIME | Fin de la charla |
 | duracion_minutos | INTEGER | Duración en minutos |
-| id_conferencista | UUID FK → Conferencistas | Ponente responsable |
+| id_conferencista | UUID FK → Conferencistas (SET NULL) | Ponente responsable |
 | ubicacion | VARCHAR(200) | Salón o espacio |
 | cupo_maximo | INTEGER NULL | Capacidad (si aplica) |
 | created_at | TIMESTAMP | Timestamp de creación |
@@ -746,7 +791,7 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_conferencista | UUID PK | Identificador único |
+| id | UUID PK | Identificador único |
 | nombre | VARCHAR(200) | Nombre completo |
 | biografia | TEXT | Breve bio |
 | foto_url | TEXT | URL de foto del conferencista |
@@ -764,9 +809,10 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_patrocinador | UUID PK | Identificador único |
+| id | UUID PK | Identificador único |
 | nombre | VARCHAR(200) | Nombre de la empresa |
 | logo_url | TEXT | URL del logo |
+| nivel | ENUM('Diamante', 'Oro', 'Plata', 'Bronce') | Nivel de patrocinio |
 | orden_display | INTEGER | Orden de aparición |
 | url_sitio_web | TEXT NULL | Sitio web del patrocinador |
 | descripcion | TEXT NULL | Descripción breve |
@@ -780,16 +826,16 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_certificado | UUID PK | Identificador único |
-| id_ticket | UUID FK → Tickets UNIQUE | Ticket asociado |
-| id_usuario | UUID FK → Usuarios | Usuario que recibe el certificado |
+| id | UUID PK | Identificador único |
+| id_ticket | UUID FK → Tickets (RESTRICT) UNIQUE | Ticket asociado |
+| id_usuario | UUID FK → Usuarios (RESTRICT) | Usuario que recibe el certificado |
 | tipo_certificado | ENUM('Participacion', 'Aprovechamiento') | Tipo generado |
 | fecha_emision | TIMESTAMP | Fecha de generación |
 | archivo_url | TEXT | Enlace al PDF en Supabase Storage |
 | estado | ENUM('Generado', 'Enviado', 'Error') | Estado del certificado |
 | fecha_envio | TIMESTAMP NULL | Cuándo se envió por email |
+| codigo_verificacion | VARCHAR(50) UNIQUE | Código para verificar autenticidad |
 | created_at | TIMESTAMP | Timestamp de creación |
-| codigo_verificacion | VARCHAR(50) |  |
 
 ---
 
@@ -797,11 +843,11 @@ event-management-system/
 
 | Campo | Tipo | Descripción |
 | --- | --- | --- |
-| id_admin | UUID PK | Identificador único |
+| id | UUID PK | Identificador único |
 | nombre | VARCHAR(200) | Nombre completo |
 | correo | VARCHAR(200) UNIQUE | Correo |
 | rol | ENUM('SuperAdmin', 'Admin', 'Staff', 'Scanner') | Nivel de acceso |
-| password_hash | TEXT | Contraseña encriptada (Supabase Auth) |
+| password_hash | TEXT | Contraseña encriptada |
 | activo | BOOLEAN DEFAULT TRUE | Si puede acceder |
 | ultimo_acceso | TIMESTAMP NULL | Última vez que ingresó |
 | created_at | TIMESTAMP | Timestamp de creación |
@@ -819,13 +865,13 @@ event-management-system/
 
 ### **Configuración del proyecto**
 
-- [ ]  Crear proyecto Next.js 14 con TypeScript
+- [x]  Crear proyecto Next.js 14 con TypeScript
 - [ ]  Configurar Tailwind CSS + shadcn/ui
-- [ ]  Setup Supabase (proyecto, base de datos)
-- [ ]  Configurar Drizzle ORM + migraciones
-- [ ]  Crear schema de base de datos (todas las tablas)
+- [x]  Setup Supabase (proyecto, base de datos)
+- [x]  Configurar Drizzle ORM + migraciones
+- [x]  Crear schema de base de datos (todas las tablas)
 - [ ]  Variables de entorno (.env.local)
-- [ ]  Git repo + primer commit
+- [x]  Git repo + primer commit
 
 ### **Sistema de precios + Cupones**
 

@@ -1,0 +1,278 @@
+event-management-system/
+│
+├── components.json
+├── drizzle.config.ts
+├── eslint.config.mjs
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.ts
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── tailwind.config.ts
+├── tsconfig.json
+├── README.md
+├── .env.local
+│
+├── public/
+│   ├── assets/
+│   │   ├── logo.svg
+│   │   ├── speakers/
+│   │   └── sponsors/
+│   └── fonts/
+│
+└── src/
+    │
+    ├── actions/                                # Server Actions de Next.js
+    │   ├── tickets.ts
+    │   ├── payments.ts
+    │   ├── certificates.ts
+    │   └── analytics.ts
+    │
+    ├── app/
+    │   │
+    │   ├── (public)/                          # Rutas públicas
+    │   │   ├── page.tsx                       # Landing page principal
+    │   │   ├── layout.tsx                     # Layout público
+    │   │   │
+    │   │   ├── evento/
+    │   │   │   └── page.tsx                   # Información del evento
+    │   │   │
+    │   │   ├── agenda/
+    │   │   │   └── page.tsx                   # Programa y horarios
+    │   │   │
+    │   │   ├── conferencistas/
+    │   │   │   └── page.tsx                   # Speakers
+    │   │   │
+    │   │   ├── patrocinadores/
+    │   │   │   └── page.tsx                   # Sponsors
+    │   │   │
+    │   │   └── tickets/
+    │   │       ├── page.tsx                   # Sistema de venta
+    │   │       ├── seleccion/
+    │   │       │   └── page.tsx               # Selección de entradas
+    │   │       ├── formulario/
+    │   │       │   └── page.tsx               # Datos de compradores
+    │   │       ├── pago/
+    │   │       │   └── page.tsx               # Integración OnvoPayments
+    │   │       └── confirmacion/
+    │   │           └── page.tsx               # Confirmación y QR
+    │   │
+    │   ├── (admin)/                           # Rutas administrativas
+    │   │   ├── layout.tsx                     # Layout admin
+    │   │   │
+    │   │   └── dashboard/
+    │   │       ├── page.tsx                   # Dashboard principal
+    │   │       │
+    │   │       ├── ventas/
+    │   │       │   └── page.tsx               # Reportes de ventas
+    │   │       │
+    │   │       ├── asistentes/
+    │   │       │   └── page.tsx               # Gestión de usuarios
+    │   │       │
+    │   │       ├── asistencia/
+    │   │       │   └── page.tsx               # Control de asistencia
+    │   │       │
+    │   │       ├── certificados/
+    │   │       │   └── page.tsx               # Generación certificados
+    │   │       │
+    │   │       └── reportes/
+    │   │           └── page.tsx               # Análisis demográfico
+    │   │
+    │   ├── (qr-scanner)/                      # PWA para lectura QR
+    │   │   ├── layout.tsx                     # Layout PWA
+    │   │   │
+    │   │   └── scanner/
+    │   │       ├── page.tsx                   # Escáner QR
+    │   │       │
+    │   │       ├── validacion/
+    │   │       │   └── page.tsx               # Resultado validación
+    │   │       │
+    │   │       └── historial/
+    │   │           └── page.tsx               # Historial de escaneos
+    │   │
+    │   ├── api/                               # API Routes
+    │   │   │
+    │   │   ├── tickets/
+    │   │   │   ├── create/
+    │   │   │   │   └── route.ts               # Crear ticket
+    │   │   │   ├── validate/
+    │   │   │   │   └── route.ts               # Validar cupón
+    │   │   │   └── [id]/
+    │   │   │       └── route.ts               # Obtener ticket por ID
+    │   │   │
+    │   │   ├── payments/
+    │   │   │   ├── webhook/
+    │   │   │   │   └── route.ts               # Webhook OnvoPayments
+    │   │   │   └── status/
+    │   │   │       └── route.ts               # Estado de pago
+    │   │   │
+    │   │   ├── qr/
+    │   │   │   ├── generate/
+    │   │   │   │   └── route.ts               # Generar QR
+    │   │   │   └── scan/
+    │   │   │       └── route.ts               # Registrar escaneo
+    │   │   │
+    │   │   ├── certificates/
+    │   │   │   ├── generate/
+    │   │   │   │   └── route.ts               # Generar certificado
+    │   │   │   └── send/
+    │   │   │       └── route.ts               # Enviar por email
+    │   │   │
+    │   │   └── analytics/
+    │   │       ├── sales/
+    │   │       │   └── route.ts               # Métricas ventas
+    │   │       └── attendance/
+    │   │           └── route.ts               # Métricas asistencia
+    │   │
+    │   ├── auth/                              # Autenticación
+    │   │   ├── login/
+    │   │   │   └── page.tsx                   # Login admin
+    │   │   └── callback/
+    │   │       └── route.ts                   # Callback Supabase
+    │   │
+    │   ├── favicon.ico
+    │   ├── globals.css                        # Estilos globales
+    │   ├── layout.tsx                         # Root layout
+    │   ├── page.tsx                           # Root page (redirect)
+    │   └── manifest.json                      # PWA manifest
+    │
+    ├── components/                            # Componentes reutilizables
+    │   │
+    │   ├── ui/                                # shadcn/ui components
+    │   │   ├── badge.tsx
+    │   │   ├── button.tsx
+    │   │   ├── card.tsx
+    │   │   ├── checkbox.tsx
+    │   │   ├── dialog.tsx
+    │   │   ├── dropdown-menu.tsx
+    │   │   ├── form.tsx
+    │   │   ├── input.tsx
+    │   │   ├── label.tsx
+    │   │   ├── select.tsx
+    │   │   ├── table.tsx
+    │   │   └── toast.tsx
+    │   │
+    │   ├── landing/                           # Componentes landing
+    │   │   ├── Hero.tsx
+    │   │   ├── EventInfo.tsx
+    │   │   ├── Speakers.tsx
+    │   │   ├── Agenda.tsx
+    │   │   ├── Sponsors.tsx
+    │   │   └── Footer.tsx
+    │   │
+    │   ├── tickets/                           # Componentes venta
+    │   │   ├── TicketSelector.tsx
+    │   │   ├── PriceCalculator.tsx
+    │   │   ├── CouponInput.tsx
+    │   │   ├── AttendeeForm.tsx
+    │   │   └── OrderSummary.tsx
+    │   │
+    │   ├── scanner/                           # Componentes escáner
+    │   │   ├── QRScanner.tsx
+    │   │   ├── ScanResult.tsx
+    │   │   └── AttendanceLog.tsx
+    │   │
+    │   ├── dashboard/                         # Componentes dashboard
+    │   │   ├── StatsCard.tsx
+    │   │   ├── SalesChart.tsx
+    │   │   ├── AttendeeTable.tsx
+    │   │   ├── DemographicChart.tsx
+    │   │   └── ExportButton.tsx
+    │   │
+    │   └── shared/                            # Componentes compartidos
+    │       ├── Navbar.tsx
+    │       ├── Sidebar.tsx
+    │       ├── Loading.tsx
+    │       └── ErrorBoundary.tsx
+    │
+    ├── config/                                # Configuración
+    │   ├── site.ts                            # Config del sitio
+    │   ├── event.ts                           # Info del evento
+    │   ├── tickets.ts                         # Categorías tickets
+    │   └── pricing.ts                         # Estructura precios
+    │
+    ├── constants/                             # Constantes globales
+    │   ├── index.ts
+    │   ├── roles.ts
+    │   └── status.ts
+    │
+    ├── hooks/                                 # Custom React hooks
+    │   ├── useTickets.ts
+    │   ├── usePayment.ts
+    │   ├── useQRScanner.ts
+    │   ├── useAttendance.ts
+    │   ├── useDashboard.ts
+    │   └── useAuth.ts
+    │
+    ├── lib/                                   # Utilidades y configuración
+    │   │
+    │   ├── supabase/
+    │   │   ├── client.ts                      # Cliente Supabase
+    │   │   ├── server.ts                      # Server client
+    │   │   └── middleware.ts                  # Auth middleware
+    │   │
+    │   ├── db/                                # Database
+    │   │   ├── index.ts                       # Export principal
+    │   │   ├── schema.ts                      # Drizzle schema
+    │   │   ├── migrations/                    # DB migrations
+    │   │   │   ├── 0000_acoustic_talkback.sql
+    │   │   │   └── meta/
+    │   │   │       ├── 0000_snapshot.json
+    │   │   │       └── _journal.json
+    │   │   └── queries.ts                     # Queries reutilizables
+    │   │
+    │   ├── payments/
+    │   │   ├── onvo.ts                        # OnvoPayments SDK
+    │   │   └── webhook-handler.ts             # Procesar webhooks
+    │   │
+    │   ├── qr/
+    │   │   ├── generator.ts                   # Generar QR codes
+    │   │   ├── scanner.ts                     # Lógica escaneo
+    │   │   └── validator.ts                   # Validar QR
+    │   │
+    │   ├── certificates/
+    │   │   ├── generator.ts                   # Generar PDFs
+    │   │   ├── criteria.ts                    # Criterios certificación
+    │   │   └── templates/                     # Plantillas PDF
+    │   │       ├── attendance.tsx
+    │   │       └── participation.tsx
+    │   │
+    │   ├── email/
+    │   │   ├── client.ts                      # Resend client
+    │   │   └── templates/                     # Plantillas email
+    │   │       ├── ticket-confirmation.tsx
+    │   │       ├── payment-reminder.tsx
+    │   │       └── certificate.tsx
+    │   │
+    │   ├── analytics/
+    │   │   ├── google.ts                      # Google Analytics
+    │   │   ├── meta-pixel.ts                  # Meta Pixel
+    │   │   └── vercel.ts                      # Vercel Analytics
+    │   │
+    │   └── utils/
+    │       ├── utils.ts                       # Utilidades generales (cn, etc)
+    │       ├── pricing.ts                     # Cálculo precios
+    │       ├── validation.ts                  # Validaciones
+    │       ├── date.ts                        # Utilidades fechas
+    │       └── export.ts                      # Exportar Excel
+    │
+    ├── schemas/                               # Validaciones Zod
+    │   ├── ticket.ts
+    │   ├── user.ts
+    │   ├── payment.ts
+    │   └── auth.ts
+    │
+    ├── store/                                 # Estado global (Zustand)
+    │   ├── cart.ts                            # Carrito de compra
+    │   ├── scanner.ts                         # Estado escáner
+    │   └── dashboard.ts                       # Filtros dashboard
+    │
+    └── types/                                 # TypeScript types
+        ├── index.ts                           # Export central
+        ├── ticket.ts
+        ├── user.ts
+        ├── payment.ts
+        ├── attendance.ts
+        ├── certificate.ts
+        └── analytics.ts
