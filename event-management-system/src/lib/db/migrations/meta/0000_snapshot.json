@@ -1,0 +1,1411 @@
+{
+  "id": "422e2055-6e95-4537-9660-faa6aff04b5b",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.administradores": {
+      "name": "administradores",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "correo": {
+          "name": "correo",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rol": {
+          "name": "rol",
+          "type": "rol_admin",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "ultimo_acceso": {
+          "name": "ultimo_acceso",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "administradores_correo_unique": {
+          "name": "administradores_correo_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "correo"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.asistencia": {
+      "name": "asistencia",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_ticket": {
+          "name": "id_ticket",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo_registro": {
+          "name": "tipo_registro",
+          "type": "tipo_registro",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_hora": {
+          "name": "fecha_hora",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "escaneado_por": {
+          "name": "escaneado_por",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ubicacion": {
+          "name": "ubicacion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "asistencia_id_ticket_tickets_id_fk": {
+          "name": "asistencia_id_ticket_tickets_id_fk",
+          "tableFrom": "asistencia",
+          "tableTo": "tickets",
+          "columnsFrom": [
+            "id_ticket"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "asistencia_escaneado_por_administradores_id_fk": {
+          "name": "asistencia_escaneado_por_administradores_id_fk",
+          "tableFrom": "asistencia",
+          "tableTo": "administradores",
+          "columnsFrom": [
+            "escaneado_por"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.asistencia_resumen": {
+      "name": "asistencia_resumen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_ticket": {
+          "name": "id_ticket",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dia_1_entrada": {
+          "name": "dia_1_entrada",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dia_1_salida": {
+          "name": "dia_1_salida",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dia_2_entrada": {
+          "name": "dia_2_entrada",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dia_2_salida": {
+          "name": "dia_2_salida",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cumple_certificacion": {
+          "name": "cumple_certificacion",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "asistencia_resumen_id_ticket_tickets_id_fk": {
+          "name": "asistencia_resumen_id_ticket_tickets_id_fk",
+          "tableFrom": "asistencia_resumen",
+          "tableTo": "tickets",
+          "columnsFrom": [
+            "id_ticket"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "asistencia_resumen_id_ticket_unique": {
+          "name": "asistencia_resumen_id_ticket_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id_ticket"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.certificados": {
+      "name": "certificados",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_ticket": {
+          "name": "id_ticket",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_usuario": {
+          "name": "id_usuario",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo_certificado": {
+          "name": "tipo_certificado",
+          "type": "tipo_certificado",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_emision": {
+          "name": "fecha_emision",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "archivo_url": {
+          "name": "archivo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estado": {
+          "name": "estado",
+          "type": "estado_certificado",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Generado'"
+        },
+        "fecha_envio": {
+          "name": "fecha_envio",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "codigo_verificacion": {
+          "name": "codigo_verificacion",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "certificados_id_ticket_tickets_id_fk": {
+          "name": "certificados_id_ticket_tickets_id_fk",
+          "tableFrom": "certificados",
+          "tableTo": "tickets",
+          "columnsFrom": [
+            "id_ticket"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "certificados_id_usuario_usuarios_id_fk": {
+          "name": "certificados_id_usuario_usuarios_id_fk",
+          "tableFrom": "certificados",
+          "tableTo": "usuarios",
+          "columnsFrom": [
+            "id_usuario"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "certificados_id_ticket_unique": {
+          "name": "certificados_id_ticket_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id_ticket"
+          ]
+        },
+        "certificados_codigo_verificacion_unique": {
+          "name": "certificados_codigo_verificacion_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "codigo_verificacion"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.charlas": {
+      "name": "charlas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "titulo": {
+          "name": "titulo",
+          "type": "varchar(300)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fecha": {
+          "name": "fecha",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hora_inicio": {
+          "name": "hora_inicio",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hora_fin": {
+          "name": "hora_fin",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duracion_minutos": {
+          "name": "duracion_minutos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_conferencista": {
+          "name": "id_conferencista",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ubicacion": {
+          "name": "ubicacion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cupo_maximo": {
+          "name": "cupo_maximo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "charlas_id_conferencista_conferencistas_id_fk": {
+          "name": "charlas_id_conferencista_conferencistas_id_fk",
+          "tableFrom": "charlas",
+          "tableTo": "conferencistas",
+          "columnsFrom": [
+            "id_conferencista"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.compras": {
+      "name": "compras",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "correo_comprador": {
+          "name": "correo_comprador",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cantidad_tickets": {
+          "name": "cantidad_tickets",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subtotal": {
+          "name": "subtotal",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descuento_total": {
+          "name": "descuento_total",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0.00'"
+        },
+        "total": {
+          "name": "total",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_cupon": {
+          "name": "id_cupon",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado_compra": {
+          "name": "estado_compra",
+          "type": "estado_compra",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Iniciado'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "compras_id_cupon_cupones_id_fk": {
+          "name": "compras_id_cupon_cupones_id_fk",
+          "tableFrom": "compras",
+          "tableTo": "cupones",
+          "columnsFrom": [
+            "id_cupon"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.conferencistas": {
+      "name": "conferencistas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "biografia": {
+          "name": "biografia",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "foto_url": {
+          "name": "foto_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "correo": {
+          "name": "correo",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "organizacion": {
+          "name": "organizacion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "redes_sociales": {
+          "name": "redes_sociales",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "orden_display": {
+          "name": "orden_display",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cupones": {
+      "name": "cupones",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "codigo": {
+          "name": "codigo",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo_descuento": {
+          "name": "tipo_descuento",
+          "type": "tipo_descuento",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "valor_descuento": {
+          "name": "valor_descuento",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_inicio": {
+          "name": "fecha_inicio",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_expiracion": {
+          "name": "fecha_expiracion",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "usos_maximos": {
+          "name": "usos_maximos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "usos_actuales": {
+          "name": "usos_actuales",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "cupones_codigo_unique": {
+          "name": "cupones_codigo_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "codigo"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.fases_precio": {
+      "name": "fases_precio",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre_fase": {
+          "name": "nombre_fase",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_inicio": {
+          "name": "fecha_inicio",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fecha_fin": {
+          "name": "fecha_fin",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precio_dia_individual": {
+          "name": "precio_dia_individual",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precio_completo": {
+          "name": "precio_completo",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precio_fiesta": {
+          "name": "precio_fiesta",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.pagos": {
+      "name": "pagos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_compra": {
+          "name": "id_compra",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "metodo_pago": {
+          "name": "metodo_pago",
+          "type": "metodo_pago",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "moneda": {
+          "name": "moneda",
+          "type": "moneda",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monto": {
+          "name": "monto",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estado_pago": {
+          "name": "estado_pago",
+          "type": "estado_pago",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Pendiente'"
+        },
+        "fecha_pago": {
+          "name": "fecha_pago",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "referencia_transaccion": {
+          "name": "referencia_transaccion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "detalles_adicionales": {
+          "name": "detalles_adicionales",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pagos_id_compra_compras_id_fk": {
+          "name": "pagos_id_compra_compras_id_fk",
+          "tableFrom": "pagos",
+          "tableTo": "compras",
+          "columnsFrom": [
+            "id_compra"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.patrocinadores": {
+      "name": "patrocinadores",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "logo_url": {
+          "name": "logo_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nivel": {
+          "name": "nivel",
+          "type": "nivel_patrocinador",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "orden_display": {
+          "name": "orden_display",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url_sitio_web": {
+          "name": "url_sitio_web",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "descripcion": {
+          "name": "descripcion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "activo": {
+          "name": "activo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tickets": {
+      "name": "tickets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "id_usuario": {
+          "name": "id_usuario",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_compra": {
+          "name": "id_compra",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo_ticket": {
+          "name": "tipo_ticket",
+          "type": "tipo_ticket",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "modalidad": {
+          "name": "modalidad",
+          "type": "modalidad_ticket",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "incluye_fiesta": {
+          "name": "incluye_fiesta",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "precio_pagado": {
+          "name": "precio_pagado",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "precio_original": {
+          "name": "precio_original",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id_fase_precio": {
+          "name": "id_fase_precio",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado_ticket": {
+          "name": "estado_ticket",
+          "type": "estado_ticket",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Activo'"
+        },
+        "qr_code": {
+          "name": "qr_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tickets_id_usuario_usuarios_id_fk": {
+          "name": "tickets_id_usuario_usuarios_id_fk",
+          "tableFrom": "tickets",
+          "tableTo": "usuarios",
+          "columnsFrom": [
+            "id_usuario"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "tickets_id_compra_compras_id_fk": {
+          "name": "tickets_id_compra_compras_id_fk",
+          "tableFrom": "tickets",
+          "tableTo": "compras",
+          "columnsFrom": [
+            "id_compra"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "tickets_id_fase_precio_fases_precio_id_fk": {
+          "name": "tickets_id_fase_precio_fases_precio_id_fk",
+          "tableFrom": "tickets",
+          "tableTo": "fases_precio",
+          "columnsFrom": [
+            "id_fase_precio"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "tickets_qr_code_unique": {
+          "name": "tickets_qr_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "qr_code"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.usuarios": {
+      "name": "usuarios",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "apellido": {
+          "name": "apellido",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "edad": {
+          "name": "edad",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genero": {
+          "name": "genero",
+          "type": "genero",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "procedencia": {
+          "name": "procedencia",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profesion": {
+          "name": "profesion",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sector": {
+          "name": "sector",
+          "type": "sector",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "telefono": {
+          "name": "telefono",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "correo": {
+          "name": "correo",
+          "type": "varchar(200)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "usuarios_correo_unique": {
+          "name": "usuarios_correo_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "correo"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.estado_certificado": {
+      "name": "estado_certificado",
+      "schema": "public",
+      "values": [
+        "Generado",
+        "Enviado",
+        "Error"
+      ]
+    },
+    "public.estado_compra": {
+      "name": "estado_compra",
+      "schema": "public",
+      "values": [
+        "Iniciado",
+        "Completado",
+        "Abandonado",
+        "Cancelado"
+      ]
+    },
+    "public.estado_pago": {
+      "name": "estado_pago",
+      "schema": "public",
+      "values": [
+        "Pendiente",
+        "Pagado",
+        "Fallido",
+        "Reembolsado"
+      ]
+    },
+    "public.estado_ticket": {
+      "name": "estado_ticket",
+      "schema": "public",
+      "values": [
+        "Activo",
+        "Usado",
+        "Cancelado",
+        "Reembolsado"
+      ]
+    },
+    "public.genero": {
+      "name": "genero",
+      "schema": "public",
+      "values": [
+        "Masculino",
+        "Femenino",
+        "Otro"
+      ]
+    },
+    "public.metodo_pago": {
+      "name": "metodo_pago",
+      "schema": "public",
+      "values": [
+        "OnvoPayments",
+        "Datafono"
+      ]
+    },
+    "public.modalidad_ticket": {
+      "name": "modalidad_ticket",
+      "schema": "public",
+      "values": [
+        "Dia1",
+        "Dia2",
+        "Completo"
+      ]
+    },
+    "public.moneda": {
+      "name": "moneda",
+      "schema": "public",
+      "values": [
+        "USD",
+        "CRC"
+      ]
+    },
+    "public.nivel_patrocinador": {
+      "name": "nivel_patrocinador",
+      "schema": "public",
+      "values": [
+        "Diamante",
+        "Oro",
+        "Plata",
+        "Bronce"
+      ]
+    },
+    "public.rol_admin": {
+      "name": "rol_admin",
+      "schema": "public",
+      "values": [
+        "SuperAdmin",
+        "Admin",
+        "Staff",
+        "Scanner"
+      ]
+    },
+    "public.sector": {
+      "name": "sector",
+      "schema": "public",
+      "values": [
+        "Publico",
+        "Privado"
+      ]
+    },
+    "public.tipo_certificado": {
+      "name": "tipo_certificado",
+      "schema": "public",
+      "values": [
+        "Participacion",
+        "Aprovechamiento"
+      ]
+    },
+    "public.tipo_descuento": {
+      "name": "tipo_descuento",
+      "schema": "public",
+      "values": [
+        "Porcentaje",
+        "MontoFijo"
+      ]
+    },
+    "public.tipo_registro": {
+      "name": "tipo_registro",
+      "schema": "public",
+      "values": [
+        "Entrada_Evento",
+        "Salida_Evento"
+      ]
+    },
+    "public.tipo_ticket": {
+      "name": "tipo_ticket",
+      "schema": "public",
+      "values": [
+        "Pagado",
+        "Gratuito",
+        "Conferencista",
+        "Patrocinador"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

@@ -2,7 +2,7 @@ import { pgTable, uuid, varchar, integer, decimal, boolean, timestamp, text, pgE
 import { sql } from "drizzle-orm";
 
 // Enums
-export const generoEnum = pgEnum("genero", ["Masculino", "Femenino", "Otro", "Prefiero no decir"]);
+export const generoEnum = pgEnum("genero", ["Masculino", "Femenino", "Otro"]);
 export const sectorEnum = pgEnum("sector", ["Publico", "Privado"]);
 export const tipoTicketEnum = pgEnum("tipo_ticket", ["Pagado", "Gratuito", "Conferencista", "Patrocinador"]);
 export const modalidadTicketEnum = pgEnum("modalidad_ticket", ["Dia1", "Dia2", "Completo"]);
@@ -16,6 +16,7 @@ export const tipoRegistroEnum = pgEnum("tipo_registro", ["Entrada_Evento", "Sali
 export const tipoCertificadoEnum = pgEnum("tipo_certificado", ["Participacion", "Aprovechamiento"]);
 export const estadoCertificadoEnum = pgEnum("estado_certificado", ["Generado", "Enviado", "Error"]);
 export const rolAdminEnum = pgEnum("rol_admin", ["SuperAdmin", "Admin", "Staff", "Scanner"]);
+export const nivelPatrocinadorEnum = pgEnum("nivel_patrocinador", ["Diamante", "Oro", "Plata", "Bronce"]);
 
 // Usuarios / Asistentes
 export const usuarios = pgTable("usuarios", {
@@ -41,7 +42,7 @@ export const compras = pgTable("compras", {
   subtotal: decimal("subtotal", { precision: 10, scale: 2 }).notNull(),
   descuentoTotal: decimal("descuento_total", { precision: 10, scale: 2 }).default("0.00").notNull(),
   total: decimal("total", { precision: 10, scale: 2 }).notNull(),
-  idCupon: uuid("id_cupon").references(() => cupones.id),
+  idCupon: uuid("id_cupon").references(() => cupones.id, { onDelete: 'set null' }),
   estadoCompra: estadoCompraEnum("estado_compra").default("Iniciado").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -81,14 +82,14 @@ export const fasesPrecio = pgTable("fases_precio", {
 // Tickets
 export const tickets = pgTable("tickets", {
   id: uuid("id").primaryKey().defaultRandom(),
-  idUsuario: uuid("id_usuario").references(() => usuarios.id).notNull(),
-  idCompra: uuid("id_compra").references(() => compras.id).notNull(),
+  idUsuario: uuid("id_usuario").references(() => usuarios.id, { onDelete: 'restrict' }).notNull(),
+  idCompra: uuid("id_compra").references(() => compras.id, { onDelete: 'cascade' }).notNull(),
   tipoTicket: tipoTicketEnum("tipo_ticket").notNull(),
   modalidad: modalidadTicketEnum("modalidad").notNull(),
   incluyeFiesta: boolean("incluye_fiesta").default(false).notNull(),
   precioPagado: decimal("precio_pagado", { precision: 10, scale: 2 }).notNull(),
   precioOriginal: decimal("precio_original", { precision: 10, scale: 2 }).notNull(),
-  idFasePrecio: uuid("id_fase_precio").references(() => fasesPrecio.id),
+  idFasePrecio: uuid("id_fase_precio").references(() => fasesPrecio.id, { onDelete: 'set null' }),
   estadoTicket: estadoTicketEnum("estado_ticket").default("Activo").notNull(),
   qrCode: text("qr_code").unique().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -98,7 +99,7 @@ export const tickets = pgTable("tickets", {
 // Pagos
 export const pagos = pgTable("pagos", {
   id: uuid("id").primaryKey().defaultRandom(),
-  idCompra: uuid("id_compra").references(() => compras.id).notNull(),
+  idCompra: uuid("id_compra").references(() => compras.id, { onDelete: 'cascade' }).notNull(),
   metodoPago: metodoPagoEnum("metodo_pago").notNull(),
   moneda: monedaEnum("moneda").notNull(),
   monto: decimal("monto", { precision: 10, scale: 2 }).notNull(),
@@ -134,7 +135,7 @@ export const charlas = pgTable("charlas", {
   horaInicio: time("hora_inicio").notNull(),
   horaFin: time("hora_fin").notNull(),
   duracionMinutos: integer("duracion_minutos").notNull(),
-  idConferencista: uuid("id_conferencista").references(() => conferencistas.id),
+  idConferencista: uuid("id_conferencista").references(() => conferencistas.id, { onDelete: 'set null' }),
   ubicacion: varchar("ubicacion", { length: 200 }),
   cupoMaximo: integer("cupo_maximo"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -146,6 +147,7 @@ export const patrocinadores = pgTable("patrocinadores", {
   id: uuid("id").primaryKey().defaultRandom(),
   nombre: varchar("nombre", { length: 200 }).notNull(),
   logoUrl: text("logo_url").notNull(),
+  nivel: nivelPatrocinadorEnum("nivel").notNull(),
   ordenDisplay: integer("orden_display").notNull(),
   urlSitioWeb: text("url_sitio_web"),
   descripcion: text("descripcion"),
@@ -170,10 +172,10 @@ export const administradores = pgTable("administradores", {
 // Asistencia
 export const asistencia = pgTable("asistencia", {
   id: uuid("id").primaryKey().defaultRandom(),
-  idTicket: uuid("id_ticket").references(() => tickets.id).notNull(),
+  idTicket: uuid("id_ticket").references(() => tickets.id, { onDelete: 'cascade' }).notNull(),
   tipoRegistro: tipoRegistroEnum("tipo_registro").notNull(),
   fechaHora: timestamp("fecha_hora").defaultNow().notNull(),
-  escannadoPor: uuid("escaneado_por").references(() => administradores.id),
+  escannadoPor: uuid("escaneado_por").references(() => administradores.id, { onDelete: 'set null' }),
   ubicacion: varchar("ubicacion", { length: 200 }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
@@ -181,7 +183,7 @@ export const asistencia = pgTable("asistencia", {
 // Asistencia Resumen
 export const asistenciaResumen = pgTable("asistencia_resumen", {
   id: uuid("id").primaryKey().defaultRandom(),
-  idTicket: uuid("id_ticket").references(() => tickets.id).unique().notNull(),
+  idTicket: uuid("id_ticket").references(() => tickets.id, { onDelete: 'cascade' }).unique().notNull(),
   dia1Entrada: timestamp("dia_1_entrada"),
   dia1Salida: timestamp("dia_1_salida"),
   dia2Entrada: timestamp("dia_2_entrada"),
@@ -193,13 +195,13 @@ export const asistenciaResumen = pgTable("asistencia_resumen", {
 // Certificados
 export const certificados = pgTable("certificados", {
   id: uuid("id").primaryKey().defaultRandom(),
-  idTicket: uuid("id_ticket").references(() => tickets.id).unique().notNull(),
-  idUsuario: uuid("id_usuario").references(() => usuarios.id).notNull(),
+  idTicket: uuid("id_ticket").references(() => tickets.id, { onDelete: 'restrict' }).unique().notNull(),
+  idUsuario: uuid("id_usuario").references(() => usuarios.id, { onDelete: 'restrict' }).notNull(),
   tipoCertificado: tipoCertificadoEnum("tipo_certificado").notNull(),
   fechaEmision: timestamp("fecha_emision").defaultNow().notNull(),
   archivoUrl: text("archivo_url").notNull(),
   estado: estadoCertificadoEnum("estado").default("Generado").notNull(),
   fechaEnvio: timestamp("fecha_envio"),
-  codigoVerificacion: varchar("codigo_verificacion", { length: 50 }).notNull(),
+  codigoVerificacion: varchar("codigo_verificacion", { length: 50 }).notNull().unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
